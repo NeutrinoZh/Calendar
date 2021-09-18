@@ -74,11 +74,14 @@ def edit(request, pk):
 
     # Иначе возвращаем форму
     return render(request, 'add.html', { 'event': event, 'date': event.date })
-    
+
 def addParticipant(request, pk):
     if request.method == 'POST':
         try:
             event = Event.objects.get(id=pk)
+            if event.user != request.user: # Если это событие не этого пользователя, кидаем ошибку
+                return HttpResponse('error')
+
             user = User.objects.get(username=request.POST['name'])
             event.participants.add(user)
             event.save()
@@ -90,6 +93,9 @@ def remParticipant(request, pk):
     if request.method == 'POST':
         try:
             event = Event.objects.get(id=pk)
+            if event.user != request.user: # Если это событие не этого пользователя, кидаем ошибку
+                return HttpResponse('error')
+                
             user = User.objects.get(username=request.POST['name'])
             event.participants.remove(user)
             event.save()
