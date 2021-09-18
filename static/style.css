@@ -1,0 +1,189 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+    background-image: linear-gradient(#98B7AF 1px, transparent 1px), 
+                      linear-gradient(90deg, #98B7AF 1px, transparent 1px);
+    background-size: 2em 2em;
+    background-color: rgb(205, 241, 183); 
+    
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;   
+    margin: 0px;
+
+    user-select: none;
+}
+
+#content {
+    padding: 0% 10%;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    margin: 2% auto;
+    background: #FFFFFF;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    overflow: hidden;   
+}
+.card {
+    display: inline-block;
+    margin: 2% 2%;
+}
+#header {
+    background: #FFFFFF;
+    padding: 1%;
+    margin-bottom: 3%;
+    user-select: none; 
+    height: 25px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+#header i {
+    font-size: large;
+    text-decoration: underline;
+}
+#header i:hover {
+    color:rgb(109, 109, 109)
+}
+#header a {
+    float: right;
+    border: 0px;
+    background: #FFFFFF;
+    height: 100%;
+    padding-left: 1%;
+}
+#header a:hover {
+    color:rgb(109, 109, 109)
+}
+
+button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    min-width: 30%;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+button:hover,.form button:active,.form button:focus {
+    background: #43A047;
+}
+
+.full {
+    width: 100%;
+}
+
+input, textarea {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+textarea {
+    height: 30vh;
+}
+
+.month {
+    padding: 70px 25px;
+    width: 100%;
+    background: #1abc9c;
+    text-align: center;
+}
+
+.month ul {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+.month ul li {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.month .prev {
+    float: left;
+    padding-top: 10px;
+}
+
+.month .next {
+    float: right;
+    padding-top: 10px;
+    margin-right: 10%;
+}
+
+.weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color: #ddd;
+}
+
+.weekdays li {
+    display: inline-block;
+    width: 13.6%;
+    color: #666;
+    text-align: center;
+}
+
+.days {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+}
+.days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 13.6%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size:12px;
+    color: #777;
+}
+
+.calendar {
+    display: inline-block;
+    max-width: 60%;
+    width: 45%;
+}
+
+.active {
+    background: #1abc9c;
+    color: rgb(228, 36, 36);
+}
+
+.days li:hover { 
+    color: rgb(228, 36, 36);
+}
+
+#events {
+    text-align: left;
+}
+
+.events {
+    max-width: 30%;
+}
+
+.card.events {
+    float: right;
+    max-width: 50%;
+    width: 50%;
+    padding: 1% 0%;
+}
+
+.event {
+    max-width: 50%;
+}

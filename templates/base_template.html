@@ -1,0 +1,21 @@
+{% extends 'template.html' %}
+
+{% block head %}
+    {% if user.is_authenticated %}
+    {% else %}
+        <meta http-equiv="refresh" content="0;URL=http://127.0.0.1:8000/accounts/login" />
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div id="header" onclick="document.location=`{% url 'index' %}`">
+        <a href="{% url 'logout'%}">Выйти</a>
+
+        <i>Календарь</i>
+    </div>
+
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'auth.css' %}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <div class="login-page">
+        <div class="form">
+            {% if form.errors %}
+                <p>Пароли не совпадают. Попробуйте снова.</p>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <input name="username"  type="text"     required placeholder="имя пользователя"/>
+                <input name="email"     type="text"     required placeholder="email адрес"/>
+                <input name="password"  type="password" required placeholder="пароль"/>
+                <input name="password2" type="password" required placeholder="повтор пароля"/>
+                
+                <button type="submit">Создать</button>
+            </form>
+            
+            <p class="message">Уже зарегистрированы? <a href="{% url 'login' %}">Войти</a></p>
+        </div>
+    </div>
+{% endblock %}

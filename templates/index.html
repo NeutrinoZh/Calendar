@@ -1,0 +1,136 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+    
+    <!-- Календарь -->
+    <div class="container calendar">
+        
+        <div class="month">      
+            <ul>
+              <li class="prev" onclick="prev()">❮</li>
+              <li class="next" onclick="next()">❯</li>
+              <li id="date"></li>
+            </ul>
+        </div>
+
+        <ul class="weekdays">
+            <li>Mo</li>
+            <li>Tu</li>
+            <li>We</li>
+            <li>Th</li>
+            <li>Fr</li>
+            <li>Sa</li>
+            <li>Su</li>
+          </ul>
+
+          <ul class="days" id="days">  
+          </ul>
+    </div>
+
+    <!-- Лист событий -->
+
+    <div class="container card events">
+        <h1>События:</h1>
+        <hr> <br>
+        {% if events %}
+            <ul id="events">
+                {% for event in events %}
+                    <li><a href="{% url 'detail' event.id %}">{{ event.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            На этот день событий нет.
+        {% endif %}
+        <br><br>
+        <button onclick="document.location+='/add'">Добавить событие</button>
+    </div>
+
+    <!-- Скрипт управления календарем 
+         В скрипте используется шаблонизатор Django.
+    -->
+
+    <script>
+        all_month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+        num_days =  [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        
+        {% if month %}
+            month = {{ month }} - 1
+            year = {{ year }}
+        {% else %}
+            current_month = 0
+            year = 2021
+        {% endif %}
+        
+        active = null // Выбранный елемент (день)
+
+        // Выбор елементов (дней):
+        function select(el) {
+            el = el.path[0]
+
+            _month = month + 1
+            _month = _month > 9 ? _month : ("0" + _month)
+            document.location = `/main/day/${year}-${_month}-${el.innerHTML}`       
+        }
+
+        days = []
+
+        // Генерация календаря
+        function genDays() {
+            // Тут установка заголовку даты
+            document.getElementById('date').innerHTML = `${all_month[month]} ${year}`
+
+            // Обнуляем массыв и стираем '.days'
+            days = [] 
+            el = document.getElementById('days')
+            el.innerHTML = ""
+
+            // Для високосных годов в Феврале 29 дней: 
+            num = num_days[month]
+            if (month == 1)
+                num += (new Date(year, 1, 29).getMonth() == 1)
+
+            // Создаем дни
+            for (let i = 0; i < num; ++i) {
+                day = document.createElement('li')
+                day.className = 'day'
+                day.innerHTML = (i + 1) > 9 ? (i + 1) : ('0' + (i + 1))
+                day.onclick = select
+                days[i] = day
+                el.appendChild(day)
+            }
+        }
+
+        // Листаем календарь 
+        function prev() {
+            month -= 1;
+            if (month < 0) {
+                month = 11
+                year -= 1
+            }
+            genDays()
+        }
+        function next() {
+            month += 1;
+            if (month > 11) {
+                month = 0
+                year += 1
+            }
+            genDays()
+        }
+
+        window.onload = () => { 
+            // Генерируем календарь, и ставим "активный" день
+            
+            genDays()
+
+            {% if day %}
+                index = {{ day }} - 1
+            {% else %}
+                index = 1
+            {% endif %}
+
+            active = days[index]
+            days[index].className = "day active"
+        }
+    </script>
+{% endblock %}

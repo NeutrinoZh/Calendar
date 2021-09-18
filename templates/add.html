@@ -1,0 +1,28 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+    <div class="container event">
+        <h1>{{ date }}</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% if event %}
+                <input name="title" required value="{{ event.title }}" placeholder="Название собития">
+                <textarea name="text" placeholder="Текст события">{{ event.text }}</textarea>
+            {% else %}
+                <input name="title" required placeholder="Название собития">
+                <textarea name="text" placeholder="Текст события"></textarea>
+            {% endif %}
+
+            <br>
+
+            {% if event %}
+                <button type="submit">Редактировать</button>
+            {% else %}
+                <button type="submit">Добавить</button>
+            {% endif %}
+        </form>
+        
+        <br><br>
+    </div>
+{% endblock %}
