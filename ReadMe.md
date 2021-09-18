@@ -4,6 +4,8 @@ pip install django (Желательно делать в виртуальной 
 python manage.py runserver
 После этого откройте свой браузер и перейдите по адресу: http://127.0.0.1:8000/main/
 Если всё пошло правильно, вы должны будете увидеть сайт "Календарь".
+<br>
+<hr>
 Админка: <br>
 username: admin <br>
 password: superword123 <br>
