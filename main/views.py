@@ -1,4 +1,5 @@
 from django.http.response import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Event
@@ -31,10 +32,8 @@ def detail(request, pk):
 
     event = Event.objects.get(id=pk)
     
-    if event.user == request.user: # Здесь проверяем принадлежит ли это событие этому пользователю 
-        return render(request, 'detail.html', { 'event': event })
-    else: # Если нет - переадресовываем на главную
-        return HttpResponseRedirect(reverse('index'))
+    # Здесь проверяем принадлежит ли это событие этому пользователю      
+    return render(request, 'detail.html', { 'event': event, 'guest': event.user != request.user })
 
 def add(request, pk):
      # Добавление событий
@@ -43,14 +42,15 @@ def add(request, pk):
         return HttpResponseRedirect(reverse('login'))
 
     if request.method == 'POST': # Если есть запрос формируем новое событие
-        a = Event()
-        a.title = request.POST['title']      
-        a.text = request.POST['text'] 
-        a.user = request.user
-        a.date = pk
+        event = Event()
+        event.title = request.POST['title']      
+        event.text = request.POST['text'] 
+        event.user = request.user
 
-        a.save()
-        return HttpResponseRedirect(reverse('day', args=[pk]))
+        event.date = pk
+
+        event.save()
+        return HttpResponseRedirect(reverse('edit', args=[event.id]))
 
     # Иначе возвращаем форму
     return render(request, 'add.html', { 'date': pk })
@@ -75,6 +75,32 @@ def edit(request, pk):
     # Иначе возвращаем форму
     return render(request, 'add.html', { 'event': event, 'date': event.date })
     
+def addParticipant(request, pk):
+    if request.method == 'POST':
+        try:
+            event = Event.objects.get(id=pk)
+            user = User.objects.get(username=request.POST['name'])
+            event.participants.add(user)
+            event.save()
+        except:
+            return HttpResponse('error')
+    return HttpResponse('success')
+
+def remParticipant(request, pk):
+    if request.method == 'POST':
+        try:
+            event = Event.objects.get(id=pk)
+            user = User.objects.get(username=request.POST['name'])
+            event.participants.remove(user)
+            event.save()
+        except:
+            return HttpResponse('error')
+    return HttpResponse('success')
+
+def participant(request):
+    events = Event.objects.filter(participants__in=[request.user])
+    return render(request, 'participant.html', { 'events': events })
+
 def remove(request, pk):
     # Удаление события, и последующая переадрисация на главную страницу
 

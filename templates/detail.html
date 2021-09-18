@@ -5,15 +5,26 @@
         <h1>{{ event.title }}</h1>
         <i>{{ event.date }}</i>
         <hr>
+        <i>Описание:</i> <br>
         {% if event.text %}
             {{ event.text }}
         {% else %}
             Текст собития не найден
         {% endif %}
 
+        <br>
         <hr>
-        <a href="{% url 'edit' event.id %}"><button>Редактировать</button></a>
-        <a href="{% url 'remove' event.id %}"><button>Удалить</button></a>
+        <i>Участники:</i> <br>
+        {% for participant in event.participants.all %}
+            {{ participant.username }} <br>
+        {% endfor %}
+
+        {% if guest %}
+        {% else %}
+            <hr>
+            <a href="{% url 'edit' event.id %}"><button>Редактировать</button></a>
+            <a href="{% url 'remove' event.id %}"><button>Удалить</button></a>
+        {% endif %}
         <br><br>
     </div>
 {% endblock %}

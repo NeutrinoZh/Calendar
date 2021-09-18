@@ -14,8 +14,6 @@
                 <textarea name="text" placeholder="Текст события"></textarea>
             {% endif %}
 
-            <br>
-
             {% if event %}
                 <button type="submit">Редактировать</button>
             {% else %}
@@ -23,6 +21,61 @@
             {% endif %}
         </form>
         
-        <br><br>
+        <br>
+
+        {% if event %}
+            <hr>
+            <i>Участники:</i> <br><br>
+
+            {% for participant in event.participants.all %}
+                <div class="participant">
+                    {{ participant.username }}
+                    <button onclick="remParticipant('{{ participant.username }}')">Удалить</button>
+                </div>
+            {% endfor %}
+            <button onclick="addParticipant()" class="full">Добавить участника</button>
+        {% endif %}
     </div>
+
+    {% csrf_token %}
+
+    <script>
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        function addParticipant() {
+            _name = prompt('Имя пользователя(учасника): ')
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/main/add-participant/{{ event.id }}', true);
+            xhr.setRequestHeader('X-CSRFToken', csrftoken)
+            
+            var data = new FormData();
+            data.append('name', _name)
+
+            xhr.onload = () => {
+                if (xhr.response == 'error')
+                    alert('Пользователь не найден или не существует')
+                else
+                    document.location.reload()
+            };
+
+            xhr.send(data)
+        }
+        function remParticipant(name) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/main/rem-participant/{{ event.id }}', true);
+            xhr.setRequestHeader('X-CSRFToken', csrftoken)
+            
+            var data = new FormData();
+            data.append('name', name)
+
+            xhr.onload = () => {
+                if (xhr.response == 'error')
+                    alert('Пользователь не найден или не существует')
+                else
+                    document.location.reload()
+            };
+
+            xhr.send(data)
+        }
+    </script>
 {% endblock %}

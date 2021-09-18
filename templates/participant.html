@@ -1,0 +1,18 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+    <div class="container events">
+        <h1>События:</h1>
+        <hr> <br>
+        {% if events %}
+            <ul id="events">
+                {% for event in events %}
+                    <li><a href="{% url 'detail' event.id %}">{{ event.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            Вы не участвуете не в каких событиях
+        {% endif %}
+        <br><br>
+    </div>
+{% endblock %}

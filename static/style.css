@@ -79,7 +79,7 @@ button:hover,.form button:active,.form button:focus {
     width: 100%;
 }
 
-input, textarea {
+input, textarea, .participant {
     font-family: "Roboto", sans-serif;
     outline: 0;
     background: #f2f2f2;
@@ -89,6 +89,19 @@ input, textarea {
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
+}
+
+.participant {
+    margin: 0px;
+    padding: 0px;
+    height: 47px;
+    text-align: left;
+    line-height: 47px;
+}
+
+.participant button {
+    margin: 0px;
+    float: right;
 }
 
 textarea {

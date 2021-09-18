@@ -8,4 +8,8 @@ urlpatterns = [
     url(r'^detail/(?P<pk>\d+)$', views.detail, name="detail"),  
     url(r'^remove/(?P<pk>\d+)$', views.remove, name="remove"),  
     url(r'^edit/(?P<pk>\d+)$', views.edit, name="edit"), 
+    url(r'^add-participant/(?P<pk>\d+)$', views.addParticipant, name="add-participant"), 
+    url(r'^rem-participant/(?P<pk>\d+)$', views.remParticipant, name="rem-participant"), 
+
+    url(r'^participant/$', views.participant, name="participant"), 
 ]
